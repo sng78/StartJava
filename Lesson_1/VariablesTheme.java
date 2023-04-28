@@ -67,11 +67,11 @@ public class VariablesTheme {
         System.out.println("Новые значения - " + num1 + " и " + num2);
 
         System.out.println("\n\t6. Вывод символов и их кодов");
-        char numberSign = 35;
-        char ampersand = 38;
-        char at = 64;
-        char caret = 94;
-        char under = 95;
+        char numberSign = '#';
+        char ampersand = '&';
+        char at = '@';
+        char caret = '^';
+        char under = '_';
         System.out.println(numberSign + " " + (int) numberSign);
         System.out.println(ampersand + " " + (int) ampersand);
         System.out.println(at + " " + (int) at);
