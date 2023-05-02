@@ -55,29 +55,29 @@ public class IfElseStatementTheme {
                 System.out.println(" отрицательное");
             }
         } else {
-            System.out.println("Число равно 0");
+            System.out.println("Число равно " + num1);
         }
 
         System.out.println("\n\t4. Поиск одинаковых цифр в числах");
         num1 = 100;
         num2 = 101;
-        int num1digit1 = num1 % 10;
-        int num1digit2 = num1 / 10 % 10;
-        int num1digit3 = num1 / 100;
-        int num2digit1 = num2 % 10;
-        int num2digit2 = num2 / 10 % 10;
-        int num2digit3 = num2 / 100;
-        if (num1digit1 != num2digit1 && num1digit2 != num2digit2 && num1digit3 != num2digit3) {
+        int numFirstOnes = num1 % 10;
+        int numFirstTens = num1 / 10 % 10;
+        int numFirstHundreds = num1 / 100;
+        int numSecondOnes = num2 % 10;
+        int numSecondTens = num2 / 10 % 10;
+        int numSecondHundreds = num2 / 100;
+        if (numFirstOnes != numSecondOnes && numFirstTens != numSecondTens && numFirstHundreds != numSecondHundreds) {
             System.out.printf("В числах %d и %d равных цифр нет\n", num1, num2);
         } else {
-            if (num1digit1 == num2digit1) {
-                System.out.printf("Одинаковые цифры %d в разряде 1\n", num1digit1);
+            if (numFirstOnes == numSecondOnes) {
+                System.out.printf("Одинаковые цифры %d в разряде 1\n", numFirstOnes);
             }
-            if (num1digit2 == num2digit2) {
-                System.out.printf("Одинаковые цифры %d в разряде 2\n", num1digit2);
+            if (numFirstTens == numSecondTens) {
+                System.out.printf("Одинаковые цифры %d в разряде 2\n", numFirstTens);
             }
-            if (num1digit3 == num2digit3) {
-                System.out.printf("Одинаковые цифры %d в разряде 3\n", num1digit3);
+            if (numFirstHundreds == numSecondHundreds) {
+                System.out.printf("Одинаковые цифры %d в разряде 3\n", numFirstHundreds);
             }
         }
 
@@ -165,21 +165,17 @@ public class IfElseStatementTheme {
                 amount -= tenUsdCash * 10;
                 oneUsdCash = amount;
             }
-            if (oneUsdCash > oneUsdInAtm) {
-                System.out.println("Банкнот не хватает!");
-            } else {
-                if (hundredUsdCash != 0) {
-                    System.out.printf("%d банкнот номиналом 100 USD, всего - %d USD\n",
-                            hundredUsdCash, hundredUsdCash * 100);
-                }
-                if (tenUsdCash != 0) {
-                    System.out.printf("%d банкнот номиналом 10 USD, всего - %d USD\n",
-                            tenUsdCash, tenUsdCash * 10);
-                }
-                if (oneUsdCash != 0) {
-                    System.out.printf("%d банкнот номиналом 1 USD, всего - %d USD\n",
-                            oneUsdCash, oneUsdCash);
-                }
+            if (hundredUsdCash != 0) {
+                System.out.printf("%d банкнот номиналом 100 USD, всего - %d USD\n",
+                        hundredUsdCash, hundredUsdCash * 100);
+            }
+            if (tenUsdCash != 0) {
+                System.out.printf("%d банкнот номиналом 10 USD, всего - %d USD\n",
+                        tenUsdCash, tenUsdCash * 10);
+            }
+            if (oneUsdCash != 0) {
+                System.out.printf("%d банкнот номиналом 1 USD, всего - %d USD\n",
+                        oneUsdCash, oneUsdCash);
             }
         }
     }
