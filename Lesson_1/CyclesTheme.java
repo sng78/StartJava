@@ -2,21 +2,19 @@ public class CyclesTheme {
 
     public static void main(String[] args) {
         System.out.println("\n1. Подсчет суммы четных и нечетных чисел");
-        int evenNum = 0;
-        int oddNum = 0;
-        int varPoint = -10;
+        int countEven = 0;
+        int countOdd = 0;
+        int begin = -10;
         do {
-            if (varPoint != 0) {
-                if (varPoint % 2 == 0) {
-                    evenNum += 1;
-                } else {
-                    oddNum += 1;
-                }
+            if (begin % 2 == 0) {
+                countEven++;
+            } else {
+                countOdd++;
             }
-            varPoint++;
-        } while (varPoint < 22);
+            begin++;
+        } while (begin <= 21);
         System.out.printf("В промежутке [-10, 21] сумма четных чисел = %d, а нечетных = %d\n",
-                evenNum, oddNum);
+                countEven, countOdd);
 
         System.out.println("\n2. Вывод чисел в интервале (min и max) в порядке убывания");
         int num1 = 10;
@@ -36,7 +34,7 @@ public class CyclesTheme {
         if (max < num3) {
             max = num3;
         }
-        for (int i = max; i > min - 1; i--) {
+        for (int i = max - 1; i > min; i--) {
             System.out.print(i + " ");
         }
 
@@ -44,11 +42,11 @@ public class CyclesTheme {
         num1 = 1234;
         int sum = 0;
         System.out.print("Исходное число в обратном порядке: ");
-        while (num1 != 0) {
-            num2 = num1 % 10;
+        while (num1 > 0) {
+            int lastDigit = num1 % 10;
             num1 /= 10;
-            sum += num2;
-            System.out.print(num2);
+            sum += lastDigit;
+            System.out.print(lastDigit);
         }
         System.out.println("\nСумма его цифр: " + sum);
 
@@ -72,16 +70,15 @@ public class CyclesTheme {
         System.out.println("\n5. Проверка количества двоек на четность / нечетность");
         num1 = 3242592;
         int copyNum1 = num1;
-        count = 0;
-        while (copyNum1 != 0) {
-            num2 = copyNum1 % 10;
-            copyNum1 /= 10;
-            if (num2 == 2) {
-                count++;
+        int countTwos = 0;
+        while (copyNum1 > 0) {
+            if (copyNum1 % 10 == 2) {
+                countTwos++;
             }
+            copyNum1 /= 10;
         }
-        System.out.printf("Число %d содержит %d(", num1, count);
-        if (count % 2 == 0) {
+        System.out.printf("Число %d содержит %d(", num1, countTwos);
+        if (countTwos % 2 == 0) {
             System.out.print("четное");
         } else {
             System.out.print("нечетное");
@@ -110,23 +107,19 @@ public class CyclesTheme {
         }
         System.out.println();
         //равнобедренный треугольник
-        height = 1;
+        height = 5;
+        int width = 0;
         do {
-            int symbols = height;
+            if (height > 2) {
+                width++;
+            } else {
+                width--;
+            }
+            int symbols = width;
             do {
                 System.out.print("$");
                 symbols--;
-            } while (symbols != 0);
-            System.out.println();
-            height++;
-        } while (height < 4);
-        height = 2;
-        do {
-            int symbols = height;
-            do {
-                System.out.print("$");
-                symbols--;
-            } while (symbols != 0);
+            } while (symbols > 0);
             System.out.println();
             height--;
         } while (height > 0);
@@ -166,15 +159,14 @@ public class CyclesTheme {
         int firstHalfNum1 = num1 % 1000;
         int secondHalfNum1 = num1 / 1000;
         int firstHalfSumNum1 = 0;
-        for (int i = 0; i < 3; i++) {
-            int lastDigit = copyNum1 % 10;
-            firstHalfSumNum1 += lastDigit;
-            copyNum1 /= 10;
-        }
         int secondHalfSumNum1 = 0;
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 6; i++) {
             int lastDigit = copyNum1 % 10;
-            secondHalfSumNum1 += lastDigit;
+            if (i < 3) {
+                firstHalfSumNum1 += lastDigit;
+            } else {
+                secondHalfSumNum1 += lastDigit;
+            }
             copyNum1 /= 10;
         }
         System.out.printf("Сумма цифр %d = %d\n", firstHalfNum1, firstHalfSumNum1);
