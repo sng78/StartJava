@@ -2,19 +2,19 @@ public class CyclesTheme {
 
     public static void main(String[] args) {
         System.out.println("\n1. Подсчет суммы четных и нечетных чисел");
-        int countEven = 0;
-        int countOdd = 0;
-        int begin = -10;
+        int sumEven = 0;
+        int sumOdd = 0;
+        int counter = -10;
         do {
-            if (begin % 2 == 0) {
-                countEven++;
+            if (counter % 2 == 0) {
+                sumEven += counter;
             } else {
-                countOdd++;
+                sumOdd += counter;
             }
-            begin++;
-        } while (begin <= 21);
+            counter++;
+        } while (counter <= 21);
         System.out.printf("В промежутке [-10, 21] сумма четных чисел = %d, а нечетных = %d\n",
-                countEven, countOdd);
+                sumEven, sumOdd);
 
         System.out.println("\n2. Вывод чисел в интервале (min и max) в порядке убывания");
         int num1 = 10;
@@ -94,6 +94,7 @@ public class CyclesTheme {
             System.out.println();
         }
         System.out.println();
+
         //прямоугольный треугольник
         int height = 5;
         while (height > 0) {
@@ -106,6 +107,7 @@ public class CyclesTheme {
             height--;
         }
         System.out.println();
+
         //равнобедренный треугольник
         height = 5;
         int width = 0;
@@ -142,7 +144,7 @@ public class CyclesTheme {
         num1 = 12321;
         copyNum1 = num1;
         int reverse = 0;
-        while (copyNum1 != 0) {
+        while (copyNum1 > 0) {
             int lastDigit = copyNum1 % 10;
             reverse = reverse * 10 + lastDigit;
             copyNum1 /= 10;
@@ -154,20 +156,18 @@ public class CyclesTheme {
         }
 
         System.out.println("\n9. Определение, является ли число счастливым");
-        num1 = 456123;
-        copyNum1 = num1;
+        num1 = 231123;
         int firstHalfNum1 = num1 % 1000;
         int secondHalfNum1 = num1 / 1000;
         int firstHalfSumNum1 = 0;
         int secondHalfSumNum1 = 0;
-        for (int i = 0; i < 6; i++) {
-            int lastDigit = copyNum1 % 10;
-            if (i < 3) {
-                firstHalfSumNum1 += lastDigit;
-            } else {
-                secondHalfSumNum1 += lastDigit;
-            }
-            copyNum1 /= 10;
+        int firstHalfCopy = firstHalfNum1;
+        int secondHalfCopy = secondHalfNum1;
+        while (firstHalfCopy > 0) {
+            firstHalfSumNum1 += firstHalfCopy % 10;
+            secondHalfSumNum1 += secondHalfCopy % 10;
+            firstHalfCopy /= 10;
+            secondHalfCopy /= 10;
         }
         System.out.printf("Сумма цифр %d = %d\n", firstHalfNum1, firstHalfSumNum1);
         System.out.printf("Сумма цифр %d = %d\n", secondHalfNum1, secondHalfSumNum1);
