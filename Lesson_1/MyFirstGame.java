@@ -8,10 +8,10 @@ public class MyFirstGame {
         while (numPlayer != numPc) {
             if (numPlayer > numPc) {
                 System.out.printf("Число %d больше того, что загадал компьютер\n", numPlayer);
-                max = (min + max) / 2;
+                max = numPlayer;
             } else {
                 System.out.printf("Число %d меньше того, что загадал компьютер\n", numPlayer);
-                min = (min + max) / 2;
+                min = numPlayer;
             }
             numPlayer = (min + max) / 2;
         }
