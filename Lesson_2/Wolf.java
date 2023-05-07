@@ -5,23 +5,23 @@ public class Wolf {
     int age;
     String color;
 
-    void Walk() {
+    void walk() {
         System.out.println("Идет");
     }
 
-    void Sit() {
+    void sit() {
         System.out.println("Сидит");
     }
 
-    void Run() {
+    void run() {
         System.out.println("Бежит");
     }
 
-    void Howl() {
+    void howl() {
         System.out.println("Воет");
     }
 
-    void Hunt() {
+    void hunt() {
         System.out.println("Охотится");
     }
 }

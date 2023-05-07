@@ -12,10 +12,10 @@ public class WolfTest {
         System.out.println("Цвет: " + wolf.color);
         System.out.println("Возраст: " + wolf.age);
         System.out.println("Вес: " + wolf.weight);
-        wolf.Howl();
-        wolf.Hunt();
-        wolf.Run();
-        wolf.Sit();
-        wolf.Walk();
+        wolf.howl();
+        wolf.hunt();
+        wolf.run();
+        wolf.sit();
+        wolf.walk();
     }
 }
