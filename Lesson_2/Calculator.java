@@ -34,33 +34,26 @@ public class Calculator {
     }
 
     public String calculate() {
-        int result;
         switch (sign) {
             case "+":
-                result = num1 + num2;
-                break;
+                return Integer.toString(num1 + num2);
             case "-":
-                result = num1 - num2;
-                break;
+                return Integer.toString(num1 - num2);
             case "*":
-                result = num1 * num2;
-                break;
+                return Integer.toString(num1 * num2);
             case "/":
-                result = num1 / num2;
-                break;
+                return Integer.toString(num1 / num2);
             case "^":
-                result = 1;
+                int result = 1;
                 for (int i = 0; i < num2; i++) {
                     result *= num1;
                 }
-                break;
+                return Integer.toString(result);
             case "%":
-                result = num1 % num2;
-                break;
+                return Integer.toString(num1 % num2);
             default:
-                System.out.println("Недоустимая операция!");
+                System.out.println("Недопустимая операция!");
                 return "ОШИБКА!";
         }
-        return Integer.toString(result);
     }
 }

@@ -3,9 +3,9 @@ import java.util.Scanner;
 public class CalculatorTest {
 
     public static void main(String[] args) {
-        boolean isRepeat = true;
+        String repeat = "yes";
         Scanner scanner = new Scanner(System.in);
-        while (isRepeat) {
+        while (repeat.equals("yes")) {
             System.out.print("Введите первое число: ");
             int num1 = Integer.parseInt(scanner.next());
             System.out.print("Введите знак математической операции: ");
@@ -14,17 +14,10 @@ public class CalculatorTest {
             int num2 = Integer.parseInt(scanner.next());
             Calculator calculator = new Calculator(num1, sign, num2);
             System.out.println("Результат вычисления: " + calculator.calculate());
-            String more;
             do {
                 System.out.print("Хотите продолжить вычисления? [yes / no] ");
-                more = scanner.next();
-                if (more.equals("yes")) {
-                    break;
-                } else if (more.equals("no")) {
-                    isRepeat = false;
-                    break;
-                }
-            } while (true);
+                repeat = scanner.next();
+            } while (!repeat.equals("yes") && !repeat.equals("no"));
         }
     }
 }
