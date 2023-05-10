@@ -13,8 +13,7 @@ public class GuessNumberTest {
 
         String repeat = "yes";
         while (repeat.equals("yes")) {
-            int hiddenNumber = (int) (Math.random() * 100 + 1);
-            GuessNumber guessNumber = new GuessNumber(player1, player2, hiddenNumber);
+            GuessNumber guessNumber = new GuessNumber(player1, player2);
             System.out.println("\nИгра начинается! Компьютер загадал число от 1 до 100!");
             guessNumber.play();
             do {

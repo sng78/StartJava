@@ -9,51 +9,33 @@ public class Calculator {
         this.num2 = num2;
     }
 
-    public int getNum1() {
-        return num1;
-    }
-
-    public void setNum1(int num1) {
-        this.num1 = num1;
-    }
-
-    public int getNum2() {
-        return num2;
-    }
-
-    public void setNum2(int num2) {
-        this.num2 = num2;
-    }
-
-    public String getSign() {
-        return sign;
-    }
-
-    public void setSign(String sign) {
-        this.sign = sign;
-    }
-
-    public String calculate() {
+    public void calculate() {
+        System.out.print("Результат вычисления: ");
         switch (sign) {
             case "+":
-                return Integer.toString(num1 + num2);
+                System.out.println(num1 + num2);
+                break;
             case "-":
-                return Integer.toString(num1 - num2);
+                System.out.println(num1 - num2);
+                break;
             case "*":
-                return Integer.toString(num1 * num2);
+                System.out.println(num1 * num2);
+                break;
             case "/":
-                return Integer.toString(num1 / num2);
+                System.out.println(num1 / num2);
+                break;
             case "^":
                 int result = 1;
                 for (int i = 0; i < num2; i++) {
                     result *= num1;
                 }
-                return Integer.toString(result);
+                System.out.println(result);
+                break;
             case "%":
-                return Integer.toString(num1 % num2);
+                System.out.println(num1 % num2);
+                break;
             default:
                 System.out.println("Недопустимая операция!");
-                return "ОШИБКА!";
         }
     }
 }
