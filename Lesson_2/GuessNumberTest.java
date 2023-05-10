@@ -13,9 +13,9 @@ public class GuessNumberTest {
 
         String repeat = "yes";
         while (repeat.equals("yes")) {
-            GuessNumber guessNumber = new GuessNumber(player1, player2);
+            GuessNumber game = new GuessNumber(player1, player2);
             System.out.println("\nИгра начинается! Компьютер загадал число от 1 до 100!");
-            guessNumber.play();
+            game.play();
             do {
                 System.out.print("Хотите продолжить игру? [yes / no] ");
                 repeat = scanner.next();

@@ -12,10 +12,7 @@ public class GuessNumber {
 
     public void play() {
         do {
-            if (isGuessed(player1)) {
-                break;
-            }
-            if (isGuessed(player2)) {
+            if (isGuessed(player1) || isGuessed(player2)) {
                 break;
             }
         } while (true);
@@ -31,9 +28,9 @@ public class GuessNumber {
         }
         if (player.getNumber() < hiddenNumber) {
             System.out.printf("Число %d меньше того, что загадал компьютер\n", player.getNumber());
-            return false;
+        } else {
+            System.out.printf("Число %d больше того, что загадал компьютер\n", player.getNumber());
         }
-        System.out.printf("Число %d больше того, что загадал компьютер\n", player.getNumber());
         return false;
     }
 }
