@@ -6,10 +6,10 @@ public class ArrayTheme {
 
     public static void main(String[] args) {
         reverseElements();
-        multiplicationElements();
+        multiplyElements();
         deleteElements();
         stairsBackElements();
-        uniqueNumbers();
+        generateUniqueNumbers();
         notEmptyStrings();
     }
 
@@ -18,95 +18,90 @@ public class ArrayTheme {
         int[] intArr = {1, 3, 7, 4, 2, 6, 5};
         System.out.print("Массив до модификации: ");
         printIntArr(intArr);
-        for (int i = 0; i < intArr.length / 2; i++) {
-            int start = 0;
-            int end = intArr.length - 1;
-            while (start < end) {
-                int temp = intArr[start];
-                intArr[start] = intArr[end];
-                intArr[end] = temp;
-                start++;
-                end--;
-            }
+        int size = intArr.length;
+        for (int i = 0; i < size / 2; i++) {
+            int temp = intArr[i];
+            intArr[i] = intArr[size - 1 - i];
+            intArr[size - 1 - i] = temp;
         }
         System.out.print("Массив после модификации: ");
         printIntArr(intArr);
     }
 
-    public static void multiplicationElements() {
+    public static void multiplyElements() {
         System.out.println("\n\t2. Вывод произведения элементов массива");
-        int[] intArr = new int[10];
-        for (int i = 0; i < intArr.length; i++) {
-            intArr[i] = i;
+        int[] digitArr = new int[10];
+        int size = digitArr.length;
+        for (int i = 0; i < size; i++) {
+            digitArr[i] = i;
         }
-        int multiInts = 1;
-        for (int i = 1; i < intArr.length - 1; i++) {
-            multiInts *= intArr[i];
-            System.out.print(intArr[i] < intArr.length - 2 ? intArr[i] + " * " : intArr[i]);
+        int result = 1;
+        for (int i = 1; i < size - 1; i++) {
+            result *= digitArr[i];
+            System.out.print(digitArr[i] + (digitArr[i] < size - 2 ? " * " : ""));
         }
-        System.out.println(" = " + multiInts);
-        System.out.printf("[%d] = %d; [%d] = %d\n", 0, intArr[0], intArr.length, intArr[intArr.length - 1]);
+        System.out.println(" = " + result);
+        System.out.printf("[%d] = %d; [%d] = %d\n", 0, digitArr[0], size, digitArr[size - 1]);
     }
 
     public static void deleteElements() {
         System.out.println("\n\t3. Удаление элементов массива");
         double[] doubleArr = new double[15];
-        for (int i = 0; i < doubleArr.length; i++) {
+        int size = doubleArr.length;
+        for (int i = 0; i < size; i++) {
             doubleArr[i] = Math.random();
         }
         System.out.println("Исходный массив:");
         printDoubleArr(doubleArr);
-        int avgIndex = doubleArr.length / 2;
-        double numFromAvgIndex = doubleArr[avgIndex];
-        int zeroCells = 0;
-        for (int i = 0; i < doubleArr.length; i++) {
-            if (numFromAvgIndex < doubleArr[i]) {
+        double middleCellValue = doubleArr[size / 2];
+        int numberOfZeroCells = 0;
+        for (int i = 0; i < size; i++) {
+            if (doubleArr[i] > middleCellValue) {
                 doubleArr[i] = 0;
-                zeroCells++;
+                numberOfZeroCells++;
             }
         }
         System.out.println("Измененный массив:");
         printDoubleArr(doubleArr);
-        System.out.println("Обнуленных ячеек: " + zeroCells);
+        System.out.println("Обнуленных ячеек: " + numberOfZeroCells);
     }
 
     public static void stairsBackElements() {
         System.out.println("\n\t4. Вывод элементов массива лесенкой в обратном порядке");
-        char[] alphabetArr = new char[26];
-        int i = 0;
-        for (char ch = 'A'; ch <= 'Z'; ch++, i++) {
-            alphabetArr[i] = ch;
+        char[] alphabet = new char[26];
+        for (int i = 0; i < 26; i++) {
+            alphabet[i] = (char) ('A' + i);
         }
-        for (int j = alphabetArr.length - 1; j >= 0; j--) {
-            for (int k = alphabetArr.length - 1; k >= j; k--) {
-                System.out.print(alphabetArr[k]);
+        for (int i = alphabet.length - 1; i >= 0; i--) {
+            for (int k = alphabet.length - 1; k >= i; k--) {
+                System.out.print(alphabet[k]);
             }
             System.out.println();
         }
     }
 
-    public static void uniqueNumbers() {
+    public static void generateUniqueNumbers() {
         System.out.println("\n\t5. Генерация уникальных чисел");
-        int[] intArr = new int[30];
-        for (int i = 0; i < intArr.length; i++) {
+        int[] uniqIntArr = new int[30];
+        for (int i = 0; i < uniqIntArr.length; i++) {
             while (true) {
                 boolean isNotUnique = false;
                 int randomNum = (int) (Math.random() * 40 + 60);
                 for (int j = 0; j < i; j++) {
-                    if (randomNum == intArr[j]) {
+                    if (randomNum == uniqIntArr[j]) {
                         isNotUnique = true;
                         break;
                     }
                 }
                 if (!isNotUnique) {
-                    intArr[i] = randomNum;
+                    uniqIntArr[i] = randomNum;
                     break;
                 }
             }
         }
-        Arrays.sort(intArr);
+        Arrays.sort(uniqIntArr);
         int count = 0;
-        for (int num : intArr) {
+        for (int num : uniqIntArr) {
             System.out.print(num + " ");
             count++;
             if (count == 10) {
