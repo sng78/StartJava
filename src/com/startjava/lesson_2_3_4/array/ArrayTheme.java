@@ -10,7 +10,7 @@ public class ArrayTheme {
         deleteElements();
         stairsBackElements();
         generateUniqueNumbers();
-        notEmptyStrings();
+        copyNonEmptyStrings();
     }
 
     public static void reverseElements() {
@@ -18,11 +18,11 @@ public class ArrayTheme {
         int[] intArr = {1, 3, 7, 4, 2, 6, 5};
         System.out.print("Массив до модификации: ");
         printIntArr(intArr);
-        int size = intArr.length;
-        for (int i = 0; i < size / 2; i++) {
+        int len = intArr.length - 1;
+        for (int i = 0; i < len; i++, len--) {
             int temp = intArr[i];
-            intArr[i] = intArr[size - 1 - i];
-            intArr[size - 1 - i] = temp;
+            intArr[i] = intArr[len];
+            intArr[len] = temp;
         }
         System.out.print("Массив после модификации: ");
         printIntArr(intArr);
@@ -30,18 +30,18 @@ public class ArrayTheme {
 
     public static void multiplyElements() {
         System.out.println("\n\t2. Вывод произведения элементов массива");
-        int[] digitArr = new int[10];
-        int size = digitArr.length;
+        int[] multipliers = new int[10];
+        int size = multipliers.length;
         for (int i = 0; i < size; i++) {
-            digitArr[i] = i;
+            multipliers[i] = i;
         }
         int result = 1;
         for (int i = 1; i < size - 1; i++) {
-            result *= digitArr[i];
-            System.out.print(digitArr[i] + (digitArr[i] < size - 2 ? " * " : ""));
+            result *= multipliers[i];
+            System.out.print(multipliers[i] + (multipliers[i] < size - 2 ? " * " : " = "));
         }
-        System.out.println(" = " + result);
-        System.out.printf("[%d] = %d; [%d] = %d\n", 0, digitArr[0], size, digitArr[size - 1]);
+        System.out.println(result);
+        System.out.printf("[%d] = %d; [%d] = %d\n", 0, multipliers[0], size, multipliers[size - 1]);
     }
 
     public static void deleteElements() {
@@ -69,11 +69,12 @@ public class ArrayTheme {
     public static void stairsBackElements() {
         System.out.println("\n\t4. Вывод элементов массива лесенкой в обратном порядке");
         char[] alphabet = new char[26];
-        for (int i = 0; i < 26; i++) {
+        int len = alphabet.length;
+        for (int i = 0; i < len; i++) {
             alphabet[i] = (char) ('A' + i);
         }
-        for (int i = alphabet.length - 1; i >= 0; i--) {
-            for (int k = alphabet.length - 1; k >= i; k--) {
+        for (int i = len - 1; i >= 0; i--) {
+            for (int k = len - 1; k >= i; k--) {
                 System.out.print(alphabet[k]);
             }
             System.out.println();
@@ -82,26 +83,26 @@ public class ArrayTheme {
 
     public static void generateUniqueNumbers() {
         System.out.println("\n\t5. Генерация уникальных чисел");
-        int[] uniqIntArr = new int[30];
-        for (int i = 0; i < uniqIntArr.length; i++) {
+        int[] uniqueNums = new int[30];
+        for (int i = 0; i < uniqueNums.length; i++) {
             while (true) {
                 boolean isNotUnique = false;
                 int randomNum = (int) (Math.random() * 40 + 60);
                 for (int j = 0; j < i; j++) {
-                    if (randomNum == uniqIntArr[j]) {
+                    if (randomNum == uniqueNums[j]) {
                         isNotUnique = true;
                         break;
                     }
                 }
                 if (!isNotUnique) {
-                    uniqIntArr[i] = randomNum;
+                    uniqueNums[i] = randomNum;
                     break;
                 }
             }
         }
-        Arrays.sort(uniqIntArr);
+        Arrays.sort(uniqueNums);
         int count = 0;
-        for (int num : uniqIntArr) {
+        for (int num : uniqueNums) {
             System.out.print(num + " ");
             count++;
             if (count == 10) {
@@ -111,37 +112,31 @@ public class ArrayTheme {
         }
     }
 
-    public static void notEmptyStrings() {
+    public static void copyNonEmptyStrings() {
         System.out.println("\n\t6. Копирование не пустых строк");
-        String[] stringArr = {"    ", "AA", "", "BBB", "CC", "D", "    ", "E", "FF", "G", ""};
+        String[] srcStrings = {"    ", "AA", "", "BBB", "CC", "D", "    ", "E", "FF", "G", ""};
         int count = 0;
-        for (String str : stringArr) {
+        for (String str : srcStrings) {
             if (!str.isBlank()) {
                 count++;
             }
         }
         String[] notEmptyStringArr = new String[count];
-        int srcPos = -1;
+        int srcPos = 0;
         int destPos = 0;
-        for (int i = 0; i < stringArr.length; i++) {
-            if (!stringArr[i].isBlank()) {
+        for (int i = 0; i < srcStrings.length; i++) {
+            if (!srcStrings[i].isBlank()) {
                 if (srcPos == -1) {
-                    if (stringArr[i + 1].isBlank()) {
-                        System.arraycopy(stringArr, i, notEmptyStringArr, destPos, 1);
-                        destPos++;
-                    } else {
-                        srcPos = i;
-                    }
-                } else {
-                    if (stringArr[i + 1].isBlank()) {
-                        System.arraycopy(stringArr, srcPos, notEmptyStringArr, destPos, i - srcPos + 1);
-                        destPos += i - srcPos + 1;
-                        srcPos = -1;
-                    }
+                    srcPos = i;
                 }
+            } else if (srcPos != -1) {
+                int len = i - srcPos;
+                System.arraycopy(srcStrings, srcPos, notEmptyStringArr, destPos, len);
+                srcPos = -1;
+                destPos += len;
             }
         }
-        System.out.println("Исходный массив " + Arrays.toString(stringArr));
+        System.out.println("Исходный массив " + Arrays.toString(srcStrings));
         System.out.println("Массив без пустых строк " + Arrays.toString(notEmptyStringArr));
     }
 
