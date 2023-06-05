@@ -31,39 +31,39 @@ public class ArrayTheme {
     public static void multiplyElements() {
         System.out.println("\n\t2. Вывод произведения элементов массива");
         int[] multipliers = new int[10];
-        int size = multipliers.length;
-        for (int i = 0; i < size; i++) {
+        int len = multipliers.length;
+        for (int i = 0; i < len; i++) {
             multipliers[i] = i;
         }
         int result = 1;
-        for (int i = 1; i < size - 1; i++) {
+        for (int i = 1; i < len - 1; i++) {
             result *= multipliers[i];
-            System.out.print(multipliers[i] + (multipliers[i] < size - 2 ? " * " : " = "));
+            System.out.print(multipliers[i] + (multipliers[i] < len - 2 ? " * " : " = "));
         }
         System.out.println(result);
-        System.out.printf("[%d] = %d; [%d] = %d\n", 0, multipliers[0], size, multipliers[size - 1]);
+        System.out.printf("[%d] = %d; [%d] = %d\n", 0, multipliers[0], len, multipliers[len - 1]);
     }
 
     public static void deleteElements() {
         System.out.println("\n\t3. Удаление элементов массива");
-        double[] doubleArr = new double[15];
-        int size = doubleArr.length;
-        for (int i = 0; i < size; i++) {
-            doubleArr[i] = Math.random();
+        double[] randomDoubles = new double[15];
+        int len = randomDoubles.length;
+        for (int i = 0; i < len; i++) {
+            randomDoubles[i] = Math.random();
         }
         System.out.println("Исходный массив:");
-        printDoubleArr(doubleArr);
-        double middleCellValue = doubleArr[size / 2];
-        int numberOfZeroCells = 0;
-        for (int i = 0; i < size; i++) {
-            if (doubleArr[i] > middleCellValue) {
-                doubleArr[i] = 0;
-                numberOfZeroCells++;
+        printDoubleArr(randomDoubles);
+        double middleCellValue = randomDoubles[len / 2];
+        int numberZeroCells = 0;
+        for (int i = 0; i < len; i++) {
+            if (randomDoubles[i] > middleCellValue) {
+                randomDoubles[i] = 0;
+                numberZeroCells++;
             }
         }
         System.out.println("Измененный массив:");
-        printDoubleArr(doubleArr);
-        System.out.println("Обнуленных ячеек: " + numberOfZeroCells);
+        printDoubleArr(randomDoubles);
+        System.out.println("Обнуленных ячеек: " + numberZeroCells);
     }
 
     public static void stairsBackElements() {
