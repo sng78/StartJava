@@ -16,12 +16,15 @@ public class GuessNumberTest {
         String repeat = "yes";
         while (repeat.equals("yes")) {
             GuessNumber game = new GuessNumber(player1, player2);
-            System.out.println("\nИгра начинается! Компьютер загадал число от 1 до 100!");
+            System.out.println("\nИГРА НАЧИНАЕТСЯ! Компьютер загадал число от 1 до 100!");
+            System.out.println("У каждого игрока по 10 попыток!\n");
             game.play();
-            do {
-                System.out.print("Хотите продолжить игру? [yes / no] ");
-                repeat = scanner.next();
-            } while (!repeat.equals("yes") && !repeat.equals("no"));
+            System.out.print("Хотите продолжить игру? [yes / no] ");
+            repeat = scanner.next();
+            if (repeat.equals("no")) {
+                System.out.println();
+                break;
+            }
         }
     }
 }

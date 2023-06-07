@@ -5,13 +5,14 @@ public class Calculator {
     private int num2;
     private String sign;
 
-    public Calculator(int num1, String sign, int num2) {
-        this.num1 = num1;
-        this.sign = sign;
-        this.num2 = num2;
+    public Calculator(String mathExpression) {
+        String[] mathExpressionSplit = mathExpression.split(" ");
+        num1 = Integer.parseInt(mathExpressionSplit[0]);
+        sign = mathExpressionSplit[1];
+        num2 = Integer.parseInt(mathExpressionSplit[2]);
     }
 
-    public int calculate() {
+    public double calculate() {
         switch (sign) {
             case "+":
                 return num1 + num2;
@@ -20,13 +21,9 @@ public class Calculator {
             case "*":
                 return num1 * num2;
             case "/":
-                return num1 / num2;
+                return (double) num1 / num2;
             case "^":
-                int result = 1;
-                for (int i = 0; i < num2; i++) {
-                    result *= num1;
-                }
-                return result;
+                return Math.pow(num1, num2);
             case "%":
                 return num1 % num2;
             default:

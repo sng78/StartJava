@@ -8,18 +8,17 @@ public class CalculatorTest {
         String option = "yes";
         Scanner scanner = new Scanner(System.in);
         while (option.equals("yes")) {
-            System.out.print("Введите первое число: ");
-            int num1 = Integer.parseInt(scanner.next());
-            System.out.print("Введите знак математической операции: ");
-            String sign = scanner.next();
-            System.out.print("Введите второе число: ");
-            int num2 = Integer.parseInt(scanner.next());
-            Calculator calculator = new Calculator(num1, sign, num2);
-            System.out.println("Результат вычисления: " + calculator.calculate());
-            do {
-                System.out.print("Хотите продолжить вычисления? [yes / no] ");
-                option = scanner.next();
-            } while (!option.equals("yes") && !option.equals("no"));
+            System.out.print("Введите математическое выражение: ");
+            String mathExpression = scanner.nextLine();
+            Calculator calculator = new Calculator(mathExpression);
+            double result = calculator.calculate();
+            System.out.print("Результат вычисления: ");
+            System.out.printf((result == (int) result ? "%.0f\n" : "%.3f\n"), result);
+            System.out.print("Хотите продолжить вычисления? [yes / no] ");
+            option = scanner.nextLine();
+            if (option.equals("no")) {
+                break;
+            }
         }
     }
 }
