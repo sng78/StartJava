@@ -3,17 +3,17 @@ package com.startjava.lesson_2_3_4.guess;
 import java.util.Arrays;
 
 public class Player {
-    private final String NAME;
+    private final String name;
     private int number;
     public int[] numbers = new int[10];
     private int count;
 
     public Player(String name) {
-        this.NAME = name;
+        this.name = name;
     }
 
     public String getName() {
-        return NAME;
+        return name;
     }
 
     public int getNumber() {
@@ -28,9 +28,9 @@ public class Player {
         return count;
     }
 
-    public void setNumber(int number) {
+    public void addNumber(int number) {
         if (count >= numbers.length - 1) {
-            System.out.println("У игрока " + NAME + " закончились попытки");
+            System.out.println("У игрока " + name + " закончились попытки");
         } else {
             numbers[count] = number;
             this.number = number;
@@ -38,7 +38,7 @@ public class Player {
         count++;
     }
 
-    public void resetData() {
+    public void clear() {
         Arrays.fill(numbers, 0, count, 0);
         count = 0;
     }

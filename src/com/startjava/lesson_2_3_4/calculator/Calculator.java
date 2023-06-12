@@ -6,10 +6,10 @@ public class Calculator {
     private String sign;
 
     public Calculator(String mathExpression) {
-        String[] mathExpressionSplit = mathExpression.split(" ");
-        num1 = Integer.parseInt(mathExpressionSplit[0]);
-        sign = mathExpressionSplit[1];
-        num2 = Integer.parseInt(mathExpressionSplit[2]);
+        String[] elements = mathExpression.split(" ");
+        num1 = Integer.parseInt(elements[0]);
+        sign = elements[1];
+        num2 = Integer.parseInt(elements[2]);
     }
 
     public double calculate() {

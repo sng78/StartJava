@@ -16,8 +16,8 @@ public class CalculatorTest {
             System.out.printf((result == (int) result ? "%.0f\n" : "%.3f\n"), result);
             System.out.print("Хотите продолжить вычисления? [yes / no] ");
             option = scanner.nextLine();
-            if (option.equals("no")) {
-                break;
+            if (!(option.equals("no") || option.equals("yes"))) {
+                System.out.println("Неверный ответ, работа программы прекращена!!!");
             }
         }
     }
