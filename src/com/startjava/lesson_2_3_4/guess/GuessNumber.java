@@ -1,10 +1,10 @@
 package com.startjava.lesson_2_3_4.guess;
 
-import java.util.Arrays;
+import java.util.Random;
 import java.util.Scanner;
 
 public class GuessNumber {
-    private static final int HIDDEN_NUMBER = (int) (Math.random() * 100 + 1);
+    private final int hiddenNumber = new Random().nextInt(100) + 1;
     private final Player player1;
     private final Player player2;
 
@@ -16,12 +16,12 @@ public class GuessNumber {
     public void play() {
         do {
             if ((isGuessed(player1) || isGuessed(player2)) ||
-                    player2.getCount() > player1.getNumbers().length - 1) {
+                    player2.getAttempt() > player1.getNumbers().length - 1) {
                 System.out.println("\nИГРА ОКОНЧЕНА!!!");
                 System.out.print("Игрок " + player1.getName() + " назвал числа: ");
-                printAttempts(nonZeroNumbers(player1));
+                printAttempts(player1.nonZeroAttempts());
                 System.out.print("Игрок " + player2.getName() + " назвал числа: ");
-                printAttempts(nonZeroNumbers(player2));
+                printAttempts(player2.nonZeroAttempts());
                 player1.clear();
                 player2.clear();
                 break;
@@ -33,12 +33,12 @@ public class GuessNumber {
         System.out.print("Вводит число игрок " + player.getName() + ": ");
         Scanner scanner = new Scanner(System.in);
         player.addNumber(scanner.nextInt());
-        if (player.getNumber() == HIDDEN_NUMBER) {
+        if (player.getNumber() == hiddenNumber) {
             System.out.println("\nИгрок " + player.getName() + " угадал число " + player.getNumber() +
-                    " c " + player.getCount() + " попытки");
+                    " c " + player.getAttempt() + " попытки");
             return true;
         }
-        if (player.getNumber() < HIDDEN_NUMBER) {
+        if (player.getNumber() < hiddenNumber) {
             System.out.printf("Число %d меньше того, что загадал компьютер\n", player.getNumber());
         } else {
             System.out.printf("Число %d больше того, что загадал компьютер\n", player.getNumber());
@@ -51,9 +51,5 @@ public class GuessNumber {
             System.out.print(number + " ");
         }
         System.out.println();
-    }
-
-    private int[] nonZeroNumbers(Player player) {
-        return Arrays.copyOf(player.getNumbers(), player.getCount());
     }
 }

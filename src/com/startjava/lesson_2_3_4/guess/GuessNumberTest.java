@@ -14,16 +14,15 @@ public class GuessNumberTest {
         Player player2 = new Player(name2);
 
         String option = "yes";
-        while (option.equals("yes")) {
-            GuessNumber game = new GuessNumber(player1, player2);
-            System.out.println("\nИГРА НАЧИНАЕТСЯ! Компьютер загадал число от 1 до 100!");
-            System.out.println("У каждого игрока по 10 попыток!\n");
-            game.play();
-            System.out.print("Хотите продолжить игру? [yes / no] ");
-            option = scanner.next();
-            if (!(option.equals("no") || option.equals("yes"))) {
-                System.out.println("Неверный ответ, работа программы прекращена!!!");
+        do {
+            if ("yes".equals(option)) {
+                GuessNumber game = new GuessNumber(player1, player2);
+                System.out.println("\nИГРА НАЧИНАЕТСЯ! Компьютер загадал число от 1 до 100!");
+                System.out.println("У каждого игрока по 10 попыток!\n");
+                game.play();
             }
-        }
+            System.out.print("Хотите продолжить игру? [yes / no] ");
+            option = scanner.nextLine();
+        } while (!"no".equals(option));
     }
 }

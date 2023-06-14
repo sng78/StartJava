@@ -1,9 +1,9 @@
 package com.startjava.lesson_2_3_4.calculator;
 
 public class Calculator {
-    private int num1;
-    private int num2;
-    private String sign;
+    private final int num1;
+    private final int num2;
+    private final String sign;
 
     public Calculator(String mathExpression) {
         String[] elements = mathExpression.split(" ");

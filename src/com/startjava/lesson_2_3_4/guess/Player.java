@@ -4,9 +4,8 @@ import java.util.Arrays;
 
 public class Player {
     private final String name;
-    private int number;
     public int[] numbers = new int[10];
-    private int count;
+    private int attempt;
 
     public Player(String name) {
         this.name = name;
@@ -16,30 +15,34 @@ public class Player {
         return name;
     }
 
-    public int getNumber() {
-        return number;
-    }
-
     public int[] getNumbers() {
         return numbers;
     }
 
-    public int getCount() {
-        return count;
+    public int getAttempt() {
+        return attempt;
+    }
+
+    public int getNumber() {
+        return numbers[attempt - 1];
     }
 
     public void addNumber(int number) {
-        if (count >= numbers.length - 1) {
-            System.out.println("У игрока " + name + " закончились попытки");
-        } else {
-            numbers[count] = number;
-            this.number = number;
+        if (attempt < numbers.length) {
+            numbers[attempt] = number;
+            attempt++;
         }
-        count++;
+        if (attempt == numbers.length) {
+            System.out.println("У игрока " + name + " закончились попытки");
+        }
     }
 
     public void clear() {
-        Arrays.fill(numbers, 0, count, 0);
-        count = 0;
+        Arrays.fill(numbers, 0, attempt, 0);
+        attempt = 0;
+    }
+
+    public int[] nonZeroAttempts() {
+        return Arrays.copyOf(getNumbers(), getAttempt());
     }
 }
