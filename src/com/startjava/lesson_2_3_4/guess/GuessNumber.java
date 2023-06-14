@@ -1,5 +1,6 @@
 package com.startjava.lesson_2_3_4.guess;
 
+import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -19,9 +20,9 @@ public class GuessNumber {
                     player2.getAttempt() > player1.getNumbers().length - 1) {
                 System.out.println("\nИГРА ОКОНЧЕНА!!!");
                 System.out.print("Игрок " + player1.getName() + " назвал числа: ");
-                printAttempts(player1.nonZeroAttempts());
+                printNonZeroAttempts(player1.nonZeroAttempts());
                 System.out.print("Игрок " + player2.getName() + " назвал числа: ");
-                printAttempts(player2.nonZeroAttempts());
+                printNonZeroAttempts(player2.nonZeroAttempts());
                 player1.clear();
                 player2.clear();
                 break;
@@ -46,10 +47,7 @@ public class GuessNumber {
         return false;
     }
 
-    private void printAttempts(int[] nonZeroNumbers) {
-        for (int number : nonZeroNumbers) {
-            System.out.print(number + " ");
-        }
-        System.out.println();
+    private void printNonZeroAttempts(int[] nonZeroNumbers) {
+        System.out.println(Arrays.toString(nonZeroNumbers).replaceAll("[\\[\\],]", ""));
     }
 }
