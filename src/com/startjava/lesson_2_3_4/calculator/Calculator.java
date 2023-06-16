@@ -1,34 +1,18 @@
 package com.startjava.lesson_2_3_4.calculator;
 
 public class Calculator {
-    private final int num1;
-    private final int num2;
-    private final String sign;
-
-    public Calculator(String mathExpression) {
-        String[] elements = mathExpression.split(" ");
-        num1 = Integer.parseInt(elements[0]);
-        sign = elements[1];
-        num2 = Integer.parseInt(elements[2]);
-    }
-
-    public double calculate() {
-        switch (sign) {
-            case "+":
-                return num1 + num2;
-            case "-":
-                return num1 - num2;
-            case "*":
-                return num1 * num2;
-            case "/":
-                return (double) num1 / num2;
-            case "^":
-                return Math.pow(num1, num2);
-            case "%":
-                return num1 % num2;
-            default:
+    public static double calculate(int num1, String sign, int num2) {
+        return switch (sign) {
+            case "+" -> num1 + num2;
+            case "-" -> num1 - num2;
+            case "*" -> num1 * num2;
+            case "/" -> (double) num1 / num2;
+            case "^" -> Math.pow(num1, num2);
+            case "%" -> num1 % num2;
+            default -> {
                 System.out.println("Недопустимая операция!");
-                return 0;
-        }
+                yield 0;
+            }
+        };
     }
 }

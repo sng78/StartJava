@@ -5,49 +5,72 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class GuessNumber {
-    private final int hiddenNumber = new Random().nextInt(100) + 1;
-    private final Player player1;
-    private final Player player2;
+    private int hiddenNumber = new Random().nextInt(100) + 1;
+    private final Player[] players;
 
-    public GuessNumber(Player player1, Player player2) {
-        this.player1 = player1;
-        this.player2 = player2;
+    public GuessNumber(Player[] players) {
+        this.players = players;
     }
 
     public void play() {
+        int rounds = 0;
+        System.out.println("НАЧИНАЕТСЯ РАУНД " + (rounds + 1));
         do {
-            if ((isGuessed(player1) || isGuessed(player2)) ||
-                    player2.getAttempt() > player1.getNumbers().length - 1) {
-                System.out.println("\nИГРА ОКОНЧЕНА!!!");
-                System.out.print("Игрок " + player1.getName() + " назвал числа: ");
-                printNonZeroAttempts(player1.nonZeroAttempts());
-                System.out.print("Игрок " + player2.getName() + " назвал числа: ");
-                printNonZeroAttempts(player2.nonZeroAttempts());
-                player1.clear();
-                player2.clear();
-                break;
+            if ((isGuessed(players[0]) || isGuessed(players[1]) || isGuessed(players[2])) ||
+                    players[2].getAttempt() > players[1].getNumbers().length - 1) {
+                rounds++;
+                System.out.printf("\nРАУНД %d ЗАВЕРШЕН!!!\n", rounds);
+                for (Player player : players) {
+                    System.out.print("Игрок " + player.getName() + " назвал числа: ");
+                    printNonZeroAttempts(player.nonZeroAttempts());
+                    player.clearAttempts();
+                }
+                if (rounds != 3) {
+                    System.out.println("\nНАЧИНАЕТСЯ РАУНД " + (rounds + 1));
+                    hiddenNumber = new Random().nextInt(100) + 1;
+                } else {
+                    System.out.println("\nИГРА ОКОНЧЕНА!!!");
+                    if (players[0].getWins() == players[1].getWins()) {
+                        System.out.println("Победителя нет! Ничья!");
+                    } else {
+                        for (Player player : players) {
+                            if (player.getWins() == 2) {
+                                System.out.println("Победил игрок " + player.getName());
+                            }
+                        }
+                    }
+                    for (Player player : players) {
+                        player.clearAttempts();
+                        player.setWins(0);
+                    }
+                    break;
+                }
             }
         } while (true);
     }
 
     private boolean isGuessed(Player player) {
-        System.out.print("Вводит число игрок " + player.getName() + ": ");
         Scanner scanner = new Scanner(System.in);
-        player.addNumber(scanner.nextInt());
+
+        boolean isAdd;
+        do {
+            System.out.print("Вводит число игрок " + player.getName() + ": ");
+            isAdd = player.addNumber(scanner.nextInt());
+        } while (!isAdd);
+
         if (player.getNumber() == hiddenNumber) {
+            player.setWins(player.getWins() + 1);
             System.out.println("\nИгрок " + player.getName() + " угадал число " + player.getNumber() +
                     " c " + player.getAttempt() + " попытки");
             return true;
         }
-        if (player.getNumber() < hiddenNumber) {
-            System.out.printf("Число %d меньше того, что загадал компьютер\n", player.getNumber());
-        } else {
-            System.out.printf("Число %d больше того, что загадал компьютер\n", player.getNumber());
-        }
+        System.out.printf("Число %d ", player.getNumber());
+        System.out.print(player.getNumber() < hiddenNumber ? "меньше" : "больше");
+        System.out.println(" того, что загадал компьютер");
         return false;
     }
 
-    private void printNonZeroAttempts(int[] nonZeroNumbers) {
+    public void printNonZeroAttempts(int[] nonZeroNumbers) {
         System.out.println(Arrays.toString(nonZeroNumbers).replaceAll("[\\[\\],]", ""));
     }
 }
