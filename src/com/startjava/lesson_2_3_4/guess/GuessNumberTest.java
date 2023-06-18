@@ -1,27 +1,23 @@
 package com.startjava.lesson_2_3_4.guess;
 
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class GuessNumberTest {
+    public static final int NUMBER_PLAYERS = 3;
+    public static final Player[] PLAYERS = new Player[NUMBER_PLAYERS];
+    public static final int ROUNDS = 3;
+    public static final int ATTEMPTS = 10;
 
     public static void main(String[] args) {
-        int numberPlayers = 3;
-        Player[] players = new Player[numberPlayers];
         Scanner scanner = new Scanner(System.in);
-        for (int i = 0; i < players.length; i++) {
-            System.out.printf("Введите имя %d игрока: ", i + 1);
-            players[i] = new Player(scanner.nextLine());
-        }
-
-        lotPlayers(players);
+        createPlayers(PLAYERS);
 
         String option = "yes";
         do {
             if ("yes".equals(option)) {
-                GuessNumber game = new GuessNumber(players);
+                GuessNumber game = new GuessNumber(PLAYERS);
                 System.out.println("\nИГРА НАЧИНАЕТСЯ! Компьютер загадал число от 1 до 100!");
-                System.out.println("У каждого игрока по 10 попыток!\n");
+                System.out.printf("У каждого игрока по %d попыток!\n\n", ATTEMPTS);
                 game.play();
             }
             System.out.print("Хотите продолжить игру? [yes / no] ");
@@ -29,15 +25,11 @@ public class GuessNumberTest {
         } while (!"no".equals(option));
     }
 
-    public static void lotPlayers(Player[] players) {
-        System.out.println("\nИгроки бросают жребий");
+    public static void createPlayers(Player[] players) {
+        Scanner scanner = new Scanner(System.in);
         for (int i = 0; i < players.length; i++) {
-            int rnd = (int) (Math.random() * 3);
-            Player player = players[rnd];
-            players[rnd] = players[i];
-            players[i] = player;
+            System.out.printf("Введите имя %d игрока: ", i + 1);
+            players[i] = new Player(scanner.nextLine());
         }
-        System.out.println("Порядок хода игроков: " +
-                Arrays.toString(players).replaceAll("[\\[\\],]", ""));
     }
 }

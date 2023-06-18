@@ -2,38 +2,20 @@ package com.startjava.lesson_2_3_4.guess;
 
 import java.util.Arrays;
 
+import static com.startjava.lesson_2_3_4.guess.GuessNumberTest.ATTEMPTS;
+
 public class Player {
     private final String name;
-    private final int[] numbers = new int[10];
+    private final int[] numbers = new int[ATTEMPTS];
     private int attempt;
-    private int wins;
+    private int score;
 
     public Player(String name) {
         this.name = name;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public int[] getNumbers() {
-        return numbers;
-    }
-
-    public int getAttempt() {
-        return attempt;
-    }
-
     public int getNumber() {
         return numbers[attempt - 1];
-    }
-
-    public int getWins() {
-        return wins;
-    }
-
-    public void setWins(int wins) {
-        this.wins = wins;
     }
 
     public boolean addNumber(int number) {
@@ -51,13 +33,25 @@ public class Player {
         return true;
     }
 
-    public void clearAttempts() {
-        Arrays.fill(numbers, 0, attempt, 0);
-        attempt = 0;
+    public int[] getNumbers() {
+        return numbers;
     }
 
-    public int[] nonZeroAttempts() {
-        return Arrays.copyOf(getNumbers(), getAttempt());
+    public int getAttempt() {
+        return attempt;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    public void clear() {
+        Arrays.fill(numbers, 0, attempt, 0);
+        attempt = 0;
     }
 
     public String toString() {
