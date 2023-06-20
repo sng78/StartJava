@@ -2,11 +2,9 @@ package com.startjava.lesson_2_3_4.guess;
 
 import java.util.Arrays;
 
-import static com.startjava.lesson_2_3_4.guess.GuessNumberTest.ATTEMPTS;
-
 public class Player {
     private final String name;
-    private final int[] numbers = new int[ATTEMPTS];
+    private final int[] numbers = new int[GuessNumberTest.ATTEMPTS];
     private int attempt;
     private int score;
 
@@ -19,8 +17,9 @@ public class Player {
     }
 
     public boolean addNumber(int number) {
-        if (number < 1 || number > 100) {
-            System.out.println("Числа должны быть от 1 до 100!");
+        if (number < GuessNumberTest.MIN_NUMBER || number > GuessNumberTest.MAX_NUMBER) {
+            System.out.printf("Числа должны быть от %d до %d!\n",
+                    GuessNumberTest.MIN_NUMBER, GuessNumberTest.MAX_NUMBER);
             return false;
         }
         if (attempt < numbers.length) {
@@ -34,7 +33,7 @@ public class Player {
     }
 
     public int[] getNumbers() {
-        return numbers;
+        return Arrays.copyOf(numbers, attempt);
     }
 
     public int getAttempt() {
