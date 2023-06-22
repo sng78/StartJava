@@ -5,6 +5,10 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class GuessNumber {
+    public static final int ROUNDS = 3;
+    public static final int ATTEMPTS = 10;
+    public static final int MIN_NUMBER = 1;
+    public static final int MAX_NUMBER = 100;
     private int hiddenNumber;
     private final Player[] players;
 
@@ -13,20 +17,24 @@ public class GuessNumber {
     }
 
     public void play() {
+        System.out.printf("\nИГРА НАЧИНАЕТСЯ! Компьютер загадал число от %d до %d!",
+                MIN_NUMBER, MAX_NUMBER);
+        System.out.printf("\nУ каждого игрока по %d попыток!", ATTEMPTS);
+        System.out.printf("\nПо результатам %d раундов будет определен победитель!\n\n", ROUNDS);
         castLots(players);
         hiddenNumber = generateRandom();
 
         int round = 1;
         System.out.println("\nНАЧИНАЕТСЯ РАУНД " + round);
-        while (round <= GuessNumberTest.ROUNDS) {
+        while (round <= ROUNDS) {
             for (Player player : players) {
-                if (player.getAttempt() != GuessNumberTest.ATTEMPTS && !isGuessed(player)) {
+                if (player.getAttempt() != ATTEMPTS && !isGuessed(player)) {
                     continue;
                 }
                 System.out.printf("\nРАУНД %d ЗАВЕРШЕН!!!\n", round);
                 for (Player pl : players) {
                     System.out.print("Игрок " + pl + " назвал числа: ");
-                    printAttempts(pl.getNumbers());
+                    printArray(Arrays.toString(pl.getNumbers()));
                     pl.clear();
                 }
                 hiddenNumber = generateRandom();
@@ -43,7 +51,7 @@ public class GuessNumber {
         }
     }
 
-    private static void castLots(Player[] players) {
+    private void castLots(Player[] players) {
         System.out.println("Игроки бросают жребий");
         for (int i = 0; i < players.length; i++) {
             int rnd = (int) (Math.random() * players.length);
@@ -51,12 +59,12 @@ public class GuessNumber {
             players[rnd] = players[i];
             players[i] = player;
         }
-        System.out.println("Порядок хода игроков: " +
-                Arrays.toString(players).replaceAll("\\[|\\]|\\,", ""));
+        System.out.print("Порядок хода игроков: ");
+        printArray(Arrays.toString(players));
     }
 
-    private static int generateRandom() {
-        return new Random().nextInt(GuessNumberTest.MAX_NUMBER) + GuessNumberTest.MIN_NUMBER;
+    private int generateRandom() {
+        return new Random().nextInt(MAX_NUMBER) + MIN_NUMBER;
     }
 
     private boolean isGuessed(Player player) {
@@ -79,8 +87,8 @@ public class GuessNumber {
         return false;
     }
 
-    private void printAttempts(int[] numbers) {
-        System.out.println(Arrays.toString(numbers).replaceAll("\\[|\\]|\\,", ""));
+    private void printArray(String str) {
+        System.out.println(str.replaceAll("[\\[\\],]", ""));
     }
 
     private void printWinner(Player[] players) {
