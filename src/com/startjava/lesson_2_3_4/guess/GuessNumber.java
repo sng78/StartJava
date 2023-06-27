@@ -5,12 +5,12 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class GuessNumber {
-    public static final int ROUNDS = 3;
     public static final int ATTEMPTS = 10;
     public static final int MIN_NUMBER = 1;
     public static final int MAX_NUMBER = 100;
-    private int hiddenNumber;
+    private static final int ROUNDS = 3;
     private final Player[] players;
+    private int hiddenNumber;
 
     public GuessNumber(Player[] players) {
         this.players = players;
@@ -22,29 +22,33 @@ public class GuessNumber {
         System.out.printf("\nУ каждого игрока по %d попыток!", ATTEMPTS);
         System.out.printf("\nПо результатам %d раундов будет определен победитель!\n\n", ROUNDS);
         castLots(players);
-        hiddenNumber = generateRandom();
 
-        int round = 1;
-        System.out.println("\nНАЧИНАЕТСЯ РАУНД " + round);
-        while (round <= ROUNDS) {
-            for (Player player : players) {
-                if (player.getAttempt() != ATTEMPTS && !isGuessed(player)) {
-                    continue;
+        for (int round = 1; round < ROUNDS + 1; round++) {
+            hiddenNumber = generateRandom();
+            System.out.println("\nНАЧИНАЕТСЯ РАУНД " + round);
+            boolean cont = true;
+            while (cont) {
+                for (Player player : players) {
+                    if (player.getAttempt() != ATTEMPTS && !isGuessed(player)) {
+                        continue;
+                    }
+                    if (player.getNumber() != hiddenNumber) {
+                        System.out.println("\nПобедителя в раунде нет!");
+                    }
+                    System.out.printf("\nРАУНД %d ЗАВЕРШЕН!!!\n", round);
+                    for (Player pl : players) {
+                        System.out.print("Игрок " + pl + " назвал числа: ");
+                        printAllNumbers(pl.getNumbers());
+                        pl.clear();
+                    }
+                    cont = false;
+                    break;
                 }
-                System.out.printf("\nРАУНД %d ЗАВЕРШЕН!!!\n", round);
-                for (Player pl : players) {
-                    System.out.print("Игрок " + pl + " назвал числа: ");
-                    printArray(Arrays.toString(pl.getNumbers()));
-                    pl.clear();
-                }
-                hiddenNumber = generateRandom();
-                round++;
-                System.out.println(round < 4 ? "\nНАЧИНАЕТСЯ РАУНД " + round : "\nИГРА ОКОНЧЕНА!!!");
-                break;
             }
         }
-
-        printWinner(players);
+        System.out.print("\nИГРА ОКОНЧЕНА!!!\nПо результатам 3 раундов ");
+        System.out.println(winner(players) == null ? "победителя нет!\n" :
+                "победил игрок " + winner(players) + "\n");
         for (Player player : players) {
             player.clear();
             player.setScore(0);
@@ -60,7 +64,10 @@ public class GuessNumber {
             players[i] = player;
         }
         System.out.print("Порядок хода игроков: ");
-        printArray(Arrays.toString(players));
+        for (Player player : players) {
+            System.out.print(player + " ");
+        }
+        System.out.println();
     }
 
     private int generateRandom() {
@@ -87,21 +94,21 @@ public class GuessNumber {
         return false;
     }
 
-    private void printArray(String str) {
-        System.out.println(str.replaceAll("[\\[\\],]", ""));
+    private void printAllNumbers(int[] numbers) {
+        System.out.println(Arrays.toString(numbers).replaceAll("[\\[\\],]", ""));
     }
 
-    private void printWinner(Player[] players) {
+    private Player winner(Player[] players) {
+        boolean isUniq = true;
         Player winner = players[0];
         for (int i = 1; i < players.length; i++) {
             if (players[i].getScore() > winner.getScore()) {
                 winner = players[i];
+                isUniq = true;
             } else if (players[i].getScore() == winner.getScore()) {
-                winner = null;
-                break;
+                isUniq = false;
             }
         }
-        System.out.print("По результатам 3 раундов ");
-        System.out.println(winner == null ? "победителя нет!" : "победил игрок " + winner);
+        return isUniq ? winner : null;
     }
 }

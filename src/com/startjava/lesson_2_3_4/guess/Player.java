@@ -23,9 +23,12 @@ public class Player {
             return false;
         }
 
+        if (attempt == GuessNumber.ATTEMPTS - 1) {
+            System.out.println("У игрока " + name + " закончились попытки!");
+        }
         if (attempt < GuessNumber.ATTEMPTS) {
             numbers[attempt] = number;
-            System.out.print(++attempt == GuessNumber.ATTEMPTS ? "У игрока " + name + " закончились попытки\n" : "");
+            attempt++;
         }
         return true;
     }
