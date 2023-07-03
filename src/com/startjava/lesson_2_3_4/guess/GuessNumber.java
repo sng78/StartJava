@@ -23,7 +23,7 @@ public class GuessNumber {
         System.out.printf("\nПо результатам %d раундов будет определен победитель!\n\n", ROUNDS);
         castLots(players);
 
-        for (int round = 1; round < ROUNDS + 1; round++) {
+        for (int round = 1; round <= ROUNDS; round++) {
             hiddenNumber = generateRandom();
             System.out.println("\nНАЧИНАЕТСЯ РАУНД " + round);
             boolean cont = true;
@@ -47,8 +47,8 @@ public class GuessNumber {
             }
         }
         System.out.print("\nИГРА ОКОНЧЕНА!!!\nПо результатам 3 раундов ");
-        System.out.println(winner(players) == null ? "победителя нет!\n" :
-                "победил игрок " + winner(players) + "\n");
+        System.out.println(hasWin(players) == null ? "победителя нет!\n" :
+                "победил игрок " + hasWin(players) + "\n");
         for (Player player : players) {
             player.clear();
             player.setScore(0);
@@ -98,17 +98,17 @@ public class GuessNumber {
         System.out.println(Arrays.toString(numbers).replaceAll("[\\[\\],]", ""));
     }
 
-    private Player winner(Player[] players) {
-        boolean isUniq = true;
+    private Player hasWin(Player[] players) {
+        boolean isUnique = true;
         Player winner = players[0];
         for (int i = 1; i < players.length; i++) {
             if (players[i].getScore() > winner.getScore()) {
                 winner = players[i];
-                isUniq = true;
+                isUnique = true;
             } else if (players[i].getScore() == winner.getScore()) {
-                isUniq = false;
+                isUnique = false;
             }
         }
-        return isUniq ? winner : null;
+        return isUnique ? winner : null;
     }
 }
