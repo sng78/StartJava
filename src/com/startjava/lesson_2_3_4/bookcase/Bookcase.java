@@ -3,41 +3,10 @@ package com.startjava.lesson_2_3_4.bookcase;
 import java.util.Arrays;
 
 public class Bookcase {
+    public static final int BOOKCASE_CAPACITY = 10;
+    private final Book[] books = new Book[BOOKCASE_CAPACITY];
     private int numberBooks;
-    private final Book[] books = new Book[BookcaseTest.BOOKCASE_CAPACITY];
-
-    public void addBook(Book book) {
-        if (numberBooks < 10) {
-            books[numberBooks] = book;
-            numberBooks++;
-            System.out.println("Книга '" + book.getTitle() + "' добавлена");
-        } else {
-            System.out.println("Шкаф заполнен. Книга не добавлена!");
-        }
-    }
-
-    public String findBook(String bookTitle) {
-        String outputMessage = "Книга '" + bookTitle + "' ";
-        int shelfNumber = findTitle(bookTitle);
-        outputMessage += (shelfNumber != -1 ? ("найдена на " + (shelfNumber + 1) + " полке") : "не найдена!");
-        return outputMessage;
-    }
-
-    public String deleteBook(String bookTitle) {
-        StringBuilder sb = new StringBuilder();
-        sb.append("Книга '").append(bookTitle).append("' ");
-        int shelfNumber = findTitle(bookTitle);
-        if (shelfNumber != -1) {
-            System.arraycopy(books, shelfNumber + 1,
-                    books, shelfNumber, numberBooks - 1 - shelfNumber);
-            books[numberBooks - 1] = null;
-            numberBooks--;
-            sb.append("удалена");
-        } else {
-            sb.append("не удалена, так как не найдена!");
-        }
-        return sb.toString();
-    }
+    private int width;
 
     public Book[] getBooks() {
         return Arrays.copyOf(books, numberBooks);
@@ -45,6 +14,48 @@ public class Bookcase {
 
     public int getNumberBooks() {
         return numberBooks;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    public void add(Book book) {
+        if (numberBooks < BOOKCASE_CAPACITY) {
+            books[numberBooks] = book;
+            numberBooks++;
+            if (book.getLength() > width) {
+                width = book.getLength();
+            }
+            System.out.println("Книга '" + book.getTitle() + "' добавлена");
+        } else {
+            System.out.println("Шкаф заполнен. Книга не добавлена!");
+        }
+    }
+
+    public Book find(String title) {
+        int shelfNumber = findIndex(title);
+        return shelfNumber != -1 ? books[shelfNumber] : null;
+    }
+
+    public boolean delete(String title) {
+        int shelfNumber = findIndex(title);
+        if (shelfNumber != -1) {
+            int widthOld = books[shelfNumber].getLength() == width ? width : 0;
+            System.arraycopy(books, shelfNumber + 1,
+                    books, shelfNumber, numberBooks - 1 - shelfNumber);
+            books[numberBooks - 1] = null;
+            numberBooks--;
+            if (widthOld != 0) {
+                width = width();
+            }
+            return true;
+        }
+        return false;
     }
 
     public int getFreeShelves() {
@@ -63,12 +74,22 @@ public class Bookcase {
         }
     }
 
-    private int findTitle(String bookTitle) {
+    private int findIndex(String title) {
         for (int i = 0; i < numberBooks; i++) {
-            if (books[i] != null && books[i].getTitle().equals(bookTitle)) {
+            if (books[i].getTitle().equals(title)) {
                 return i;
             }
         }
         return -1;
+    }
+
+    private int width() {
+        int lengthBookMax = 0;
+        for (Book book : getBooks()) {
+            if (book.getLength() > lengthBookMax) {
+                lengthBookMax = book.getLength();
+            }
+        }
+        return lengthBookMax;
     }
 }

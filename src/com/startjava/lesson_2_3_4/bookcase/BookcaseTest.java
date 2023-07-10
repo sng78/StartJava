@@ -3,7 +3,7 @@ package com.startjava.lesson_2_3_4.bookcase;
 import java.util.Scanner;
 
 public class BookcaseTest {
-    public static final int BOOKCASE_CAPACITY = 10;
+//    public static final int BOOKCASE_CAPACITY = 10;
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
@@ -11,23 +11,25 @@ public class BookcaseTest {
         System.out.println("\nШкаф пуст. Вы можете добавить в него первую книгу");
         Bookcase bookcase = new Bookcase();
 
-//        bookcase.addBook(new Book("Ирвинг Стоун", "Жажда жизни", 1973));
-//        bookcase.addBook(new Book("Рэй Брэдбери", "451 градус по Фаренгейту", 1980));
-//        bookcase.addBook(new Book("Даниель Дефо", "Робинзон Крузо", 1719));
-//        bookcase.addBook(new Book("Николай Носов", "Приключения Незнайки и его друзей", 1953));
-//        bookcase.addBook(new Book("Лев Толстой", "Война и мир (том 1)", 1865));
+//        bookcase.add(new Book("Ирвинг Стоун", "Жажда жизни", 1973));
+//        bookcase.add(new Book("Рэй Брэдбери", "451 градус по Фаренгейту", 1980));
+//        bookcase.add(new Book("Даниель Дефо", "Робинзон Крузо", 1719));
+//        bookcase.add(new Book("Николай Носов", "Приключения Незнайки и его друзей", 1953));
+//        bookcase.add(new Book("Лев Толстой", "Война и мир (том 1)", 1865));
 
         while (true) {
-            if (mainMenu(bookcase, scanner)) {
+            displayMenu();
+            if (select(bookcase, scanner)) {
                 pressEnter(scanner);
                 displayBookcase(bookcase);
                 continue;
             }
+            System.out.println("\nПРОГРАММА ЗАВЕРШИЛА РАБОТУ, ДО ВСТЕЧИ!!!");
             break;
         }
     }
 
-    private static boolean mainMenu(Bookcase bookcase, Scanner scanner) {
+    private static void displayMenu() {
         System.out.print("""
                                 
                 1 Добавить книгу
@@ -36,7 +38,9 @@ public class BookcaseTest {
                 4 Очистить шкаф
                 5 Выйти из программы
                 """);
+    }
 
+    private static boolean select(Bookcase bookcase, Scanner scanner) {
         while (true) {
             System.out.print("     Ваш выбор: ");
             String menuItem = scanner.nextLine();
@@ -47,10 +51,10 @@ public class BookcaseTest {
                     continue;
                 }
                 switch (option) {
-                    case 1 -> addBookMenu(bookcase, scanner);
-                    case 2 -> findBookMenu(bookcase, scanner);
-                    case 3 -> deleteBookMenu(bookcase, scanner);
-                    case 4 -> clearBookcaseMenu(bookcase, scanner);
+                    case 1 -> addBook(bookcase, scanner);
+                    case 2 -> findBook(bookcase, scanner);
+                    case 3 -> deleteBook(bookcase, scanner);
+                    case 4 -> clearBookcase(bookcase, scanner);
                     default -> {
                         return false;
                     }
@@ -62,7 +66,7 @@ public class BookcaseTest {
         }
     }
 
-    private static void addBookMenu(Bookcase bookcase, Scanner scanner) {
+    private static void addBook(Bookcase bookcase, Scanner scanner) {
         System.out.print("Добавляем новую книгу\nАвтор: ");
         String author = scanner.nextLine();
         System.out.print("Название книги: ");
@@ -72,7 +76,7 @@ public class BookcaseTest {
             try {
                 System.out.print("Год издания: ");
                 year = Integer.parseInt(scanner.nextLine());
-                bookcase.addBook(new Book(author, title, year));
+                bookcase.add(new Book(author, title, year));
             } catch (NumberFormatException e) {
                 System.out.println("Ошибка, повторите ввод!!!");
                 continue;
@@ -81,17 +85,21 @@ public class BookcaseTest {
         }
     }
 
-    private static void findBookMenu(Bookcase bookcase, Scanner scanner) {
+    private static void findBook(Bookcase bookcase, Scanner scanner) {
         System.out.print("Введите название книги для ее поиска: ");
-        System.out.println(bookcase.findBook(scanner.nextLine()));
+        String title = scanner.nextLine();
+        Book book = bookcase.find(title);
+        System.out.print("Книга '" + title + "' " + (book != null ? "найдена - " + book : "не найдена!"));
     }
 
-    private static void deleteBookMenu(Bookcase bookcase, Scanner scanner) {
+    private static void deleteBook(Bookcase bookcase, Scanner scanner) {
         System.out.print("Введите название книги для ее удаления: ");
-        System.out.println(bookcase.deleteBook(scanner.nextLine()));
+        String title = scanner.nextLine();
+        System.out.println("Книга '" + title + "' " + (bookcase.delete(title) ? "удалена" :
+                "не удалена, так как не найдена!"));
     }
 
-    private static void clearBookcaseMenu(Bookcase bookcase, Scanner scanner) {
+    private static void clearBookcase(Bookcase bookcase, Scanner scanner) {
         String option;
         do {
             System.out.print("Очистить шкаф, Вы уверены? [yes / no] ");
@@ -104,6 +112,7 @@ public class BookcaseTest {
                     for (int i = 1; i < occupiedShelves + 1; i++) {
                         System.out.println(bookcase.clearShelf(i));
                     }
+                    bookcase.setWidth(0);
                 }
                 break;
             }
@@ -122,26 +131,16 @@ public class BookcaseTest {
     private static void displayBookcase(Bookcase bookcase) {
         System.out.printf("     В шкафу книг - %d, свободных полок - %d\n",
                 bookcase.getNumberBooks(), bookcase.getFreeShelves());
-        int widthBookcase = widthShelf(bookcase);
+        int widthBookcase = bookcase.getWidth();
         printShelf(widthBookcase);
         for (Book book : bookcase.getBooks()) {
             printBook(widthBookcase, book);
             printShelf(widthBookcase);
         }
-        if (bookcase.getBooks().length < BOOKCASE_CAPACITY) {
+        if (bookcase.getBooks().length < Bookcase.BOOKCASE_CAPACITY) {
             printBook(widthBookcase, null);
             printShelf(widthBookcase);
         }
-    }
-
-    private static int widthShelf(Bookcase bookcase) {
-        int lengthBookMax = 0;
-        for (Book book : bookcase.getBooks()) {
-            if (book.getLength() > lengthBookMax) {
-                lengthBookMax = book.getLength();
-            }
-        }
-        return lengthBookMax;
     }
 
     private static void printShelf(int widthBookcase) {
